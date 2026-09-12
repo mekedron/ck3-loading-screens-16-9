@@ -1,0 +1,185 @@
+### This GUI cannot use types or templates from other files, as they have not been loaded yet.
+
+# Ultrawide Loading Screens - modified copy of
+# game/gui/preload/frontend_loadingscreen.gui from CK3 1.19.0.6 (Scribe).
+#
+# Every loading screen the game ships, base game and DLC alike, is 3840x2160 -
+# exactly 16:9. Vanilla draws it with fittype = centercrop, which is a cover
+# fit: on 5120x1440 the scale is max(5120/3840, 1440/2160) = 1.333, the image
+# becomes 5120x2880, and the top and bottom halves are cropped away. You see a
+# horizontal strip through the middle of the artwork and nothing else.
+#
+# Changes vs vanilla:
+#   * a dimmed centercrop copy of the same art fills the screen behind
+#     everything, so the sides are not empty black
+#   * the artwork, the progress spinner and the version number moved into a
+#     16:9 stage that is scaled to fit inside the screen and centred - the
+#     same construct frontend_main.gui already uses three times
+#   * new block "loading_screen_extra", so the save game loading screen can
+#     put its tip text inside the stage as well
+
+widget = {
+	name = "load_screen"
+	size = { 100% 100% }
+
+	widget_loading_screen = {}
+}
+
+types LoadingScreen
+{
+	type widget_loading_screen = widget {
+		size = { 100% 100% }
+
+		# The letterbox. Same image, same vanilla crop, dimmed - it reads as a
+		# deliberate surround rather than as two empty bars. For plain black
+		# instead, replace this whole block with:
+		#     background = { texture = "gfx/interface/colors/black.dds" }
+		background = {
+			texture = "[GetCurrentLoadingScreen]"
+			fittype = centercrop
+			color = { 0.22 0.22 0.22 1 }
+		}
+
+		widget = {
+			name = "loading_screen_16_9_stage"
+			parentanchor = center
+			size = { 1920 1080 }
+			scale = "[ScaleToFitElementInside('(int32)1920', '(int32)1080')]"
+
+			background = {
+				texture = "[GetCurrentLoadingScreen]"
+				fittype = centercrop
+			}
+
+			flowcontainer = {
+				margin = { 25 25 }
+
+				flowcontainer = {
+					ignoreinvisible = yes
+					spacing = 15
+
+					background = {
+						visible = "[ReleaseMode]"
+						texture = "gfx/interface/component_masks/mask_fade_circle.dds"
+						color = { 0.15 0.15 0.15 0.7 }
+						margin = { 0 30 }
+						margin_left = 150
+						margin_right = 80
+					}
+
+					progressbar = {
+						size = { 65 65 }
+						gfxtype = framedprogressbargfx
+						texture = "gfx/interface/frontend/loading_progress.dds"
+						framesize = { 88 88 }
+						loopinterval = 1.5
+						max = 0
+
+						icon = {
+							parentanchor =  center
+							texture = "gfx/interface/frontend/ck3_logo_banner.dds"
+							size = { 36 45 }
+							scale = 0.8
+						}
+					}
+
+					block "loading_screen_text"
+					{
+						textbox = {
+							name = "load_status_text"
+							visible = "[Not(ReleaseMode)]"
+							parentanchor = vcenter
+							size = { 200 30 }
+							fontsize = 20
+							font = StandardGameFont
+							default_format = "#medium;glow_color:{0.2,0.2,0.2,1}"
+							align = left|nobaseline
+						}
+
+						textbox = {
+							name = "load_status_text_release"
+							visible = "[ReleaseMode]"
+							text = "LOADSCREEN_INITIALIZING_GAME"
+							parentanchor = vcenter
+							size = { 200 30 }
+							fontsize = 20
+							font = StandardGameFont
+							align = left|nobaseline
+							default_format = "#medium;glow_color:{0.2,0.2,0.2,1}"
+						}
+					}
+				}
+			}
+
+			# Anything the calling screen wants inside the 16:9 area rather
+			# than pinned to the corners of an ultrawide monitor.
+			block "loading_screen_extra" {}
+
+			clickable_version_number = {
+				visible = "[Not(ReleaseMode)]"
+
+				parentanchor = bottom|right
+				position = { -15 -15 }
+			}
+		}
+	}
+}
+
+template Animation_LoadingScreen_ShowHide
+{
+	alpha = 0.3
+
+	state = {
+		name = appear
+		trigger_on_create = yes
+		bezier = { 0.25 0.1 0.25 1 }
+		delay = 0.3
+		duration = 1
+
+		alpha = 1
+	}
+
+	state = {
+		name = _show
+		bezier = { 0.25 0.1 0.25 1 }
+		duration = 1
+
+		alpha = 1
+	}
+
+	state = {
+		name = _hide
+		bezier = { 0.25 0.1 0.25 1 }
+		duration = 1
+
+		alpha = 0
+	}
+}
+
+
+Types BasicFrontendTypes
+{
+	type clickable_version_number = button_group {
+		name = "copy_build_version"
+
+		onclick = "[CopyBuildVersionInfoToClipboard]"
+		tooltip = "[GetBuildVersionDescriptionWithClickToCopy]"
+
+		textbox = {
+			name = "build_version"
+			parentanchor = center
+			autoresize = yes
+			block "version_text" {
+				text = "TOP_BAR_VERSION"
+				align = right
+			}
+			max_width = 400
+			multiline = yes
+
+			default_format = "#medium;glow_color:{0,0,0,1}"
+		}
+
+
+	}
+
+}
