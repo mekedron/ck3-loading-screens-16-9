@@ -1,8 +1,22 @@
-# Ultrawide Loading Screens (CK3)
+# 16:9 Loading Screens (CK3)
 
-Shows the whole loading screen illustration on ultrawide and super-ultrawide
-displays instead of a horizontal strip cut out of its middle, and moves the
-progress spinner, the status text and the loading tip into that same area.
+Draws loading screens at their native 16:9 instead of cropping them to the
+shape of the display, and moves the progress spinner, the status text and the
+loading tip into that same frame.
+
+<img src="thumbnail.png" alt="A CK3 loading screen with the slice vanilla keeps outlined across its middle" width="360">
+
+The name is deliberate. This changes an aspect ratio; it does not add wider
+artwork, and calling it an ultrawide fix would invite people to expect
+full-width illustrations that do not exist.
+
+How much it matters depends on how wide the display is:
+
+| display | cover scale | illustration visible |
+| --- | --- | --- |
+| 16:9 | 1.000 | all of it - the mod changes nothing |
+| 21:9, 3440x1440 | 0.896 | 74% |
+| 32:9, 5120x1440 | 1.333 | 50% |
 
 ## Cause
 
@@ -20,7 +34,8 @@ a single odd one:
         fittype = centercrop
     }
 
-`centercrop` is a cover fit. On 5120x1440 the scale it picks is
+`centercrop` is a cover fit: the image is scaled until it covers the window
+in both directions and the overflow is cut. On 5120x1440 the scale it picks is
 `max(5120/3840, 1440/2160)` = `max(1.333, 0.667)` = **1.333**, so the image is
 drawn at 5120x2880 and the viewport keeps 1440 of those 2880 rows. Half the
 artwork - the top quarter and the bottom quarter - is cropped away, and what
@@ -61,12 +76,15 @@ The type also gains `block "loading_screen_extra"` inside the stage.
 block. Without this the tip stays a child of the full-screen widget and keeps
 hugging the bottom left corner of the monitor.
 
-## Not verified on a 16:9 monitor
+## Verified, and not
 
-On a 16:9 screen `ScaleToFitElementInside` returns the same scale as
-`centercrop` did, so the result should be pixel-identical to vanilla except
-that the dimmed backdrop is fully covered by the stage. That reasoning has not
-been checked against an actual 16:9 display.
+Confirmed in game on 5120x1440: the full illustration is shown, the sides are
+a dimmed continuation of it, and the spinner and the tip sit inside the frame.
+
+Not checked on an actual 16:9 display. There `ScaleToFitElementInside` returns
+the same scale `centercrop` did, so the result should be pixel-identical to
+vanilla except that the dimmed backdrop ends up fully covered by the stage -
+but that is reasoning, not a test.
 
 One thing worth knowing if it misbehaves: `gui/preload/` is loaded before the
 rest of the GUI, and the vanilla file opens with a warning that it cannot use
@@ -77,9 +95,17 @@ first thing to suspect if the loading screen comes out wrong.
 ## Layout
 
     descriptor.mod                              mod metadata
+    thumbnail.png                               Workshop preview, must sit in the mod root
     gui/preload/frontend_loadingscreen.gui      overrides the same vanilla path
     gui/frontend_loadingscreen_savegame.gui     overrides the same vanilla path
     install.sh                                  copies the mod into the Proton prefix
+    steam-workshop/                             listing texts for Steam and Paradox Mods
+    tools/make_thumbnail.py                     rebuilds thumbnail.png from a screenshot
+    tools/bbcode_to_plain.py                    rebuilds the Paradox Mods texts
+
+The mod directory inside the prefix is still `ultrawide_loading_screens`, from
+before the rename. Changing it would break the launcher's playset entry and
+buy nothing - the directory name is not shown anywhere.
 
 ## Installing
 
@@ -94,7 +120,7 @@ That is the path the game and the Paradox launcher actually use under Proton.
 location and is *not* read by the Proton build.
 
 Close the launcher before installing, then start it and enable
-"Ultrawide Loading Screens" in the playset. `install.sh` only places the
+"16:9 Loading Screens" in the playset. `install.sh` only places the
 files; it cannot add the mod to a playset, because that lives in the
 launcher's own `launcher-v2.sqlite`.
 

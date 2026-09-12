@@ -1,0 +1,45 @@
+16:9 Loading Screens
+
+Loading screens are drawn at their native 16:9 instead of being cropped to the shape of your monitor, so you see the whole illustration. The progress spinner, the status text and the loading tip move into that same frame.
+
+This is about aspect ratio, not about new art. Nothing is added, upscaled or repainted — the images the game already ships are simply shown whole.
+
+THE CAUSE
+
+Every loading screen in the game is 3840x2160, exactly 16:9. That is true of all five base game illustrations and all ten that come with DLC — there is not one odd size among them.
+
+The game draws them with fittype = centercrop, which is a cover fit: the image is scaled until it fills the window in both directions, and whatever sticks out is cut off. On a display wider than 16:9 that means the top and the bottom of every illustration are thrown away:
+
+- 16:9 — nothing is cropped, the mod changes nothing
+- 21:9 (3440x1440) — about a quarter of the picture is cut
+- 32:9 (5120x1440) — exactly half of it is cut, and you are left with a strip through the middle
+
+The spinner and the tip are anchored to the corners of the whole window, so on a wide monitor they also end up far away from the artwork.
+
+THE FIX
+
+The illustration, the spinner and the tip are placed inside a 16:9 stage that is scaled to fit inside the window and centred. On 5120x1440 that stage is 2560x1440 — the whole picture, nothing cropped.
+
+This is not a new trick. The vanilla main menu already uses exactly this construct in three places, which is why the main menu has never had the problem in the first place.
+
+Behind the stage, the same illustration is drawn again with the vanilla crop and dimmed. The sides are a darkened continuation of the same painting rather than two black bars.
+
+NOTES
+
+- On a 16:9 display the result is the same as vanilla — this mod is for anything wider
+- Interface only: no gameplay, script or history files are changed, so ironman and achievements are unaffected
+- Safe to add or remove at any time, including mid-campaign — it does not touch save games
+- Mods that add new loading screen images work fine with this and benefit from it: any 16:9 image they add is shown whole like the vanilla ones
+- The change applies from the very first loading screen, because the file it overrides is loaded before everything else
+- Built for CK3 1.19.x
+
+COMPATIBILITY
+
+Two GUI files are replaced in full, so this conflicts with other mods that restyle the loading screen itself. Mods that only add artwork do not touch these files and do not conflict.
+
+SOURCE
+
+The full source is on GitHub, including the exact change against each vanilla file and an install script for Linux / Proton users:
+https://github.com/mekedron/ck3-loading-screens-16-9
+
+Issues and pull requests are welcome.

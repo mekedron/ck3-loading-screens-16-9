@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Копирует мод в папку модов CK3 внутри Proton-префикса.
+# Папка мода осталась ultrawide_loading_screens с первой версии: переименование
+# сломало бы запись в плейсете, а имя папки нигде не видно.
 # Игра под Proton читает Documents из префикса, а не из ~/.local/share/Paradox Interactive.
 set -euo pipefail
 
@@ -14,7 +16,8 @@ mkdir -p "$DST/mod/$NAME"
 rm -rf "$DST/mod/$NAME/gui"
 cp -r "$SRC/gui" "$DST/mod/$NAME/gui"
 cp "$SRC/descriptor.mod" "$DST/mod/$NAME/descriptor.mod"
+cp "$SRC/thumbnail.png" "$DST/mod/$NAME/thumbnail.png"
 { cat "$SRC/descriptor.mod"; printf 'path="mod/%s"\r\n' "$NAME"; } > "$DST/mod/$NAME.mod"
 
 echo "Установлено в $DST/mod/$NAME"
-echo "Дальше: включи 'Ultrawide Loading Screens' в плейсете лаунчера."
+echo "Дальше: включи '16:9 Loading Screens' в плейсете лаунчера."

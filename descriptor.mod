@@ -4,5 +4,6 @@ tags={
 	"Graphics"
 	"Utilities"
 }
-name="Ultrawide Loading Screens"
+name="16:9 Loading Screens"
+picture="thumbnail.png"
 supported_version="1.19.*"

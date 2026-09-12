@@ -1,0 +1,1 @@
+Every CK3 loading screen is 16:9, but the game crops it to the shape of your monitor — on 32:9 you see half the picture. This mod shows the whole illustration and moves the spinner and the tip into the frame. Interface only, ironman-safe.
