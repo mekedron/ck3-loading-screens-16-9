@@ -1,7 +1,7 @@
 ### This GUI cannot use types or templates from other files, as they have not been loaded yet.
 
 # Ultrawide Loading Screens - modified copy of
-# game/gui/preload/frontend_loadingscreen.gui from CK3 1.19.0.6 (Scribe).
+# game/gui/preload/frontend_loadingscreen.gui from CK3 1.20.0.2 (Crozier).
 #
 # Every loading screen the game ships, base game and DLC alike, is 3840x2160 -
 # exactly 16:9. Vanilla draws it with fittype = centercrop, which is a cover

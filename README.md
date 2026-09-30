@@ -21,11 +21,11 @@ How much it matters depends on how wide the display is:
 ## Cause
 
 Every loading screen the game ships is **3840x2160** - exactly 16:9. That is
-true of all five base game images and all ten that come with DLC; there is not
+true of all five base game images and all eleven that come with DLC; there is not
 a single odd one:
 
     game/gfx/interface/illustrations/loading_screens/*.dds      5 files
-    game/dlc/*/gfx/interface/illustrations/loading_screens/*.dds   10 files
+    game/dlc/*/gfx/interface/illustrations/loading_screens/*.dds   11 files
 
 `game/gui/preload/frontend_loadingscreen.gui` draws that image with
 
@@ -136,6 +136,6 @@ they add is shown whole like the vanilla ones.
 
 ## Game version
 
-Built against 1.19.0.6 (Scribe). GUI overrides fully replace the vanilla file,
+Built against 1.20.0.2 (Crozier). GUI overrides fully replace the vanilla file,
 so after a game patch re-diff both files against
 `<steam>/Crusader Kings III/game/gui/`.

@@ -6,7 +6,7 @@ This is about aspect ratio, not about new art. Nothing is added, upscaled or rep
 
 THE CAUSE
 
-Every loading screen in the game is 3840x2160, exactly 16:9. That is true of all five base game illustrations and all ten that come with DLC — there is not one odd size among them.
+Every loading screen in the game is 3840x2160, exactly 16:9. That is true of all five base game illustrations and all eleven that come with DLC — there is not one odd size among them.
 
 The game draws them with fittype = centercrop, which is a cover fit: the image is scaled until it fills the window in both directions, and whatever sticks out is cut off. On a display wider than 16:9 that means the top and the bottom of every illustration are thrown away:
 
@@ -31,7 +31,7 @@ NOTES
 - Safe to add or remove at any time, including mid-campaign — it does not touch save games
 - Mods that add new loading screen images work fine with this and benefit from it: any 16:9 image they add is shown whole like the vanilla ones
 - The change applies from the very first loading screen, because the file it overrides is loaded before everything else
-- Built for CK3 1.19.x
+- Built for CK3 1.20.x
 
 COMPATIBILITY
 

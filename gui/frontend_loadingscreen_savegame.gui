@@ -1,5 +1,5 @@
 # Ultrawide Loading Screens - modified copy of
-# game/gui/frontend_loadingscreen_savegame.gui from CK3 1.19.0.6 (Scribe).
+# game/gui/frontend_loadingscreen_savegame.gui from CK3 1.20.0.2 (Crozier).
 #
 # Only change: the loading tip moves from a loose child of the full screen
 # widget into blockoverride "loading_screen_extra", which this mod adds to
