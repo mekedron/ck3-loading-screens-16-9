@@ -1,5 +1,9 @@
 16:9 Loading Screens
 
+HELP FIX THIS IN THE BASE GAME
+I have asked Paradox to take the ultrawide fixes into the game itself — the code is ready. If this mod helps you, please like the thread or leave a reply, so the developers see how many ultrawide players there are:
+https://forum.paradoxplaza.com/forum/threads/1946916/
+
 Loading screens are drawn at their native 16:9 instead of being cropped to the shape of your monitor, so you see the whole illustration. The progress spinner, the status text and the loading tip move into that same frame.
 
 This is about aspect ratio, not about new art. Nothing is added, upscaled or repainted — the images the game already ships are simply shown whole.
